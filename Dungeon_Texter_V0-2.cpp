@@ -1,0 +1,102 @@
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h> 
+#include <string>
+#include <vector>
+#include <cassert>
+
+int get_char()
+{
+	struct termios old_t, new_t;
+	
+	int character;
+  
+	tcgetattr(STDIN_FILENO, &old_t);
+  
+	new_t = old_t;  
+	new_t.c_lflag &= ~(ICANON | ECHO);
+  
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_t);
+  
+	character = getchar();
+  
+	tcsetattr(STDIN_FILENO, TCSANOW, &old_t);
+  
+	return character;  
+}
+
+char typed_char()
+{
+	char typed{' '};
+	
+	while (typed == ' ')
+	{
+		typed = get_char();
+	}
+	
+	return typed;
+	
+}
+
+void create_dungeon(std::vector <std::vector <char>>& dungeon, const int dungeon_side)
+{	
+	const int side_length{2*dungeon_side + 1};
+	
+	for (int count_1{0}; count_1 < side_length; ++count_1)
+	{
+		std::vector <char> dungeon_strip;
+		
+		for (int count_2{0}; count_2 < side_length; ++count_2)
+		{
+			dungeon_strip.push_back('+');
+		}
+		
+		dungeon.push_back(dungeon_strip);		
+	}	
+}
+
+void display_dungeon(const std::vector <std::vector <char>>& dungeon)
+{
+	const int side_length_1{static_cast<int>(dungeon.size())};
+	
+	for (int count_1{0}; count_1 < side_length_1; ++count_1)
+	{
+		const int side_length_2{static_cast<int>(dungeon[count_1].size())};
+		
+		for (int count_2{0}; count_2 < side_length_2; ++count_2)
+		{
+			std::cout << dungeon[count_1][count_2];
+		}
+		
+		std::cout << '\n';		
+	}	
+}
+
+
+int main()
+{
+	const std::string program_name{"Dungeon Texter V0.2"};
+	assert(program_name != "");
+	
+	char typed{' '};
+	assert(typed = ' ');
+	
+	typed = typed_char();
+	
+	std::cout << "Welcome to " << program_name << '\n';
+	
+	std::vector <std::vector <char>> dungeon;
+	
+	const int dungeon_side{5};
+	assert(dungeon_side >= 5);
+	
+	create_dungeon(dungeon, dungeon_side);
+	
+	display_dungeon(dungeon);
+	
+	
+	return 0;
+}
