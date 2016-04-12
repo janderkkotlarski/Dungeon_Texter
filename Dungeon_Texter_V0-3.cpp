@@ -25,16 +25,51 @@ enum class direction {up, down, right, left, none};
 
 #include "display_dungeon.h"
 
-// #include "enum_class_direction.h"
-
 #include "type_to_dir.h"
 
-void move_player(std::vector <std::vector <char>>& dungeon, const direction& dir)
+std::vector <int> dir_to_vect()
 {
+	std::vector <int> vect{0, 0};
 	
+	const direction dir{type_to_dir()};
 	
+	switch (dir)
+	{
+		case direction::up:
+			vect[1] = -1;
+		case direction::down:
+			vect[1] = 1;
+		case direction::right:
+			vect[0] = 1;
+		case direction::left:
+			vect[0] = -1;
+		case direction::none:
+			;
+	}
+	
+	return vect;	
 }
 
+void check_and_move(std::vector <std::vector<char>>& dungeon, std::vector <int>& player)
+{
+	const int side_length_1{static_cast<int>(dungeon.size())};
+	assert(side_length_1 > 0);
+	
+	const int side_length_2{static_cast<int>(dungeon[0].size())};
+	assert(side_length_2 > 0);
+	
+	const std::vector <int> vect{dir_to_vect()};
+	
+	const std::vector <int> next{(player[0] + vect[0] + side_length_1) % side_length_1,
+								 (player[1] + vect[1] + side_length_2) % side_length_2};
+	
+	if (dungeon[next[0]][next[1]] == ' ')
+	{
+		dungeon[next[0]][next[1]] = '*';
+		dungeon[player[0]][player[1]] = ' ';
+		player = next;
+	}	
+}
 
 int main()
 {
@@ -50,12 +85,19 @@ int main()
 	
 	std::vector <std::vector <char>> dungeon;
 	
+	std::vector <int> player{0, 0};
+	
 	const int dungeon_side{10};
 	assert(dungeon_side >= 5);
 	
 	create_dungeon(dungeon, dungeon_side);
-	initiate_dungeon(dungeon);	
-	display_dungeon(dungeon);	
+	initiate_dungeon(dungeon, player);
+	
+	while (true)
+	{
+		display_dungeon(dungeon);
+		check_and_move(dungeon, player);
+	}
 	
 	return 0;
 }

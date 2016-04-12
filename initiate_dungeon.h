@@ -1,4 +1,4 @@
-void initiate_dungeon(std::vector <std::vector <char>>& dungeon)
+void initiate_dungeon(std::vector <std::vector <char>>& dungeon, std::vector <int>& player)
 {
 	const int free_side{1};	
 	const int side_length_1{static_cast<int>(dungeon.size())};
@@ -34,6 +34,9 @@ void initiate_dungeon(std::vector <std::vector <char>>& dungeon)
 			if ((count_1 == side_radius_1) && (count_2 == side_radius_2))
 			{
 				dungeon[count_1][count_2] = '*';
+				
+				player[0] = side_radius_1;
+				player[1] = side_radius_2;
 			}			
 		}		
 	}	
@@ -41,5 +44,5 @@ void initiate_dungeon(std::vector <std::vector <char>>& dungeon)
 	if (!exit)
 	{
 		dungeon[0][0] = '@';
-	}	
+	}
 }
