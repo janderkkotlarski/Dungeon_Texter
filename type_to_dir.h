@@ -6,31 +6,26 @@ direction type_to_dir()
 	assert(dir == direction::none);
 	
 	typed_char(typed);
-	
-	switch (typed)
+
+	if (typed == 'w')
 	{
-		case 'w':
-			dir = direction::up;
-		case 's':
-			dir = direction::down;
-		case 'd':
-			dir = direction::right;
-		case 'a':
-			dir = direction::left;		
+		dir = direction::up;
 	}
-	
-	switch (dir)
+	else if (typed == 's')
 	{
-		case direction::up:
-			std::cout << "up\n";
-		case direction::down:
-			std::cout << "down\n";
-		case direction::right:
-			std::cout << "right\n";
-		case direction::left:
-			std::cout << "left\n";	
-		case direction::none:
-			std::cout << "none\n";
+		dir = direction::down;
+	}
+	else if (typed == 'd')
+	{
+		dir = direction::right;
+	}
+	else if (typed == 'a')
+	{
+		dir = direction::left;
+	}
+	else if (typed == '0')
+	{
+		dir = direction::done;
 	}
 	
 	return dir;	

@@ -4,7 +4,7 @@ bool gamble()
 	std::random_device rand;	
 	const float random_part{static_cast<float>(rand())/static_cast<float>(max_unsigned)};
 	
-	const float fraction{0.9999f};
+	const float fraction{0.65f};
 	assert(fraction > 0.0f);
 	assert(fraction < 1.0f);
 	

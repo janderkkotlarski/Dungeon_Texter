@@ -1,8 +1,8 @@
-int get_char()
+char get_char()
 {
 	struct termios old_t, new_t;
 	
-	int character;
+	char character;
   
 	tcgetattr(STDIN_FILENO, &old_t);
   
@@ -14,6 +14,6 @@ int get_char()
 	character = getchar();
   
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_t);
-  
+	  
 	return character;  
 }
