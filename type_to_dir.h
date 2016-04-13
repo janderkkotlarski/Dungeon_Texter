@@ -19,5 +19,19 @@ direction type_to_dir()
 			dir = direction::left;		
 	}
 	
+	switch (dir)
+	{
+		case direction::up:
+			std::cout << "up\n";
+		case direction::down:
+			std::cout << "down\n";
+		case direction::right:
+			std::cout << "right\n";
+		case direction::left:
+			std::cout << "left\n";	
+		case direction::none:
+			std::cout << "none\n";
+	}
+	
 	return dir;	
 }
