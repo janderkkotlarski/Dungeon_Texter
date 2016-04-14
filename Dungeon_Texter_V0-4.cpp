@@ -47,7 +47,7 @@ int main()
 	int level{1};
 	assert(level > 0);
 	
-	const int max_level{5};
+	const int max_level{10};
 	assert(max_level >= level);
 	
 	while (max_level >= level)
