@@ -23,7 +23,7 @@ enum class direction {up, down, right, left, none, done};
 #include "create_dungeon.h"
 #include "initiate_dungeon.h"
 
-#include "display_dungeon.h"
+#include "display_part.h"
 
 #include "type_to_dir.h"
 #include "dir_to_vect.h"
@@ -35,30 +35,41 @@ int main()
 {
 	const std::string program_name{"Dungeon Texter V0.4"};
 	assert(program_name != "");
-	
-	char typed{' '};
-	assert(typed = ' ');
-	
-	typed_char(typed);
-	
+
 	std::cout << "Welcome to " << program_name << '\n';
 	
-	std::vector <std::vector <char>> dungeon;
+	const int sight{2};
+	assert(sight > 0);
 	
-	std::vector <int> player{0, 0};
+	const int begin_side{4};
+	assert(begin_side >= 4);
 	
-	const int dungeon_side{10};
-	assert(dungeon_side >= 5);
+	int level{1};
+	assert(level > 0);
 	
-	create_dungeon(dungeon, dungeon_side);
-	initiate_dungeon(dungeon, player);
+	const int max_level{5};
+	assert(max_level >= level);
 	
-	bool looping{true};
-	
-	while (looping)
+	while (max_level >= level)
 	{
-		display_dungeon(dungeon);
-		check_and_move(dungeon, player, looping);
+		std::vector <std::vector <char>> dungeon;	
+		std::vector <int> player{0, 0};
+		
+		const int dungeon_side{begin_side + level};
+		assert(dungeon_side >= 5);
+		
+		create_dungeon(dungeon, dungeon_side);
+		initiate_dungeon(dungeon, player);
+		
+		bool looping{true};
+		
+		while (looping)
+		{
+			display_part(dungeon, player, sight, level);
+			check_and_move(dungeon, player, looping);
+		}
+		
+		++level;
 	}
 	
 	return 0;

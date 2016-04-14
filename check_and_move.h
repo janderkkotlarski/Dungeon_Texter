@@ -16,5 +16,12 @@ void check_and_move(std::vector <std::vector<char>>& dungeon, std::vector <int>&
 		dungeon[next[0]][next[1]] = '*';
 		dungeon[player[0]][player[1]] = ' ';
 		player = next;
-	}	
+	}
+	else if (dungeon[next[0]][next[1]] == '@')
+	{
+		dungeon[next[0]][next[1]] = '*';
+		dungeon[player[0]][player[1]] = ' ';
+		player = next;
+		looping = false;
+	}
 }

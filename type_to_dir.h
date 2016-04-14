@@ -7,8 +7,6 @@ direction type_to_dir()
 	
 	typed_char(typed);
 	
-	std::cout << typed << '\n';
-	
 	switch (typed)
 	{
 		case 'w':
