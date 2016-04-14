@@ -1,48 +1,45 @@
 void initiate_dungeon(std::vector <std::vector <char>>& dungeon, std::vector <int>& player)
 {
 	const int free_side{1};	
-	const int side_length_1{static_cast<int>(dungeon.size())};
-	assert(side_length_1 > 1);
 	
-	const int side_radius_1{(side_length_1 - 1)/2};
+	const int side_length_x{static_cast<int>(dungeon.size())};
+	assert(side_length_x > 1);
 	
-	bool exit{false};
+	const int side_radius_x{(side_length_x - 1)/2};
 	
-	for (int count_1{0}; count_1 < side_length_1; ++count_1)
+	const int side_length_y{static_cast<int>(dungeon[0].size())};		
+	assert(side_length_y > 1);
+	
+	const int side_radius_y{(side_length_y - 1)/2};
+	
+	
+	for (int count_1{0}; count_1 < side_length_x; ++count_1)
 	{
-		const int side_length_2{static_cast<int>(dungeon[count_1].size())};		
-		const int side_radius_2{(side_length_2 - 1)/2};
-		assert(side_length_2 > 1);
-		
-		for (int count_2{0}; count_2 < side_length_2; ++count_2)
+		for (int count_2{0}; count_2 < side_length_y; ++count_2)
 		{
-			if (((abs(count_1 - side_radius_1) > free_side) ||
-				(abs(count_2 - side_radius_2) > free_side)))
+			if (((abs(count_1 - side_radius_x) > free_side) ||
+				(abs(count_2 - side_radius_y) > free_side)))
 			{
 				if (gamble())
 				{
 					dungeon[count_1][count_2] = '#';
-				}
-				
-				if (luckey(side_length_1, side_length_2) && !exit)
-				{
-					dungeon[count_1][count_2] = '@';
-					exit = true;
-				}				
+				}					
 			}			
 			
-			if ((count_1 == side_radius_1) && (count_2 == side_radius_2))
+			if ((count_1 == side_radius_x) && (count_2 == side_radius_y))
 			{
 				dungeon[count_1][count_2] = '*';
 				
-				player[0] = side_radius_1;
-				player[1] = side_radius_2;
+				player[0] = side_radius_x;
+				player[1] = side_radius_y;
 			}			
 		}		
 	}	
 	
-	if (!exit)
-	{
-		dungeon[0][0] = '@';
-	}
+	int side_x{side_length_x};
+	int side_y{side_length_y};
+	
+	luckey(side_x, side_y);
+	
+	dungeon[side_x][side_y] = '@';
 }

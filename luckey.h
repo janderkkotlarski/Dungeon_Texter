@@ -1,22 +1,31 @@
-bool luckey(const int side_1, const int side_2)
+void luckey(int& side_x, int& side_y)
 {	
-	assert(side_1 > 0);
-	assert(side_2 > 0);
+	assert(side_x > 0);
+	assert(side_y > 0);
+	
+	const int radius_x{(side_x - 1)/2};
+	const int radius_y{(side_y - 1)/2};
+	
+	const int half_radius_x{radius_x/2 + 1};
+	const int half_radius_y{radius_y/2 + 1};
+	
+	int place_x{0};
+	int place_y{0};
 	
 	unsigned int max_unsigned {static_cast<unsigned int>(-1)};	
-	std::random_device rand;	
-	const float random_part{static_cast<float>(rand())/static_cast<float>(max_unsigned)};
+	std::random_device rand;
 	
-	const float square_fraction{1.3f/static_cast<float>(side_1*side_2)};
-	
-	const float fraction{1.0f - square_fraction};
-	assert(fraction > 0.0f);
-	assert(fraction < 1.0f);
-	
-	if (random_part > fraction)
+	while ((abs(place_x) <= half_radius_x) && (abs(place_y) <= half_radius_y))
 	{
-		return true;
+		place_x = static_cast<int>(
+			trunc(static_cast<float>(side_x)*static_cast<float>(rand())/static_cast<float>(max_unsigned))) -
+			radius_x;
+			
+		place_y = static_cast<int>(
+			trunc(static_cast<float>(side_y)*static_cast<float>(rand())/static_cast<float>(max_unsigned))) -
+			radius_y;	
 	}
 	
-	return false;
+	side_x = place_x + radius_x;
+	side_y = place_y + radius_y;
 }
