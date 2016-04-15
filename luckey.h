@@ -15,7 +15,8 @@ void luckey(int& side_x, int& side_y)
 	unsigned int max_unsigned {static_cast<unsigned int>(-1)};	
 	std::random_device rand;
 	
-	while ((abs(place_x) <= half_radius_x) && (abs(place_y) <= half_radius_y))
+	while ((abs(place_x) <= half_radius_x) && (abs(place_y) <= half_radius_y) &&
+			(((abs(place_x) % 2) != 0) || ((abs(place_y) % 2) != 0)))
 	{
 		place_x = static_cast<int>(
 			trunc(static_cast<float>(side_x)*static_cast<float>(rand())/static_cast<float>(max_unsigned))) -
